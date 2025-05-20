@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday Ansa!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@400;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    user-select: none;
+    background: #fff0f8;
+  }
+
+  .container {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  section.page {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    z-index: 1;
+    color: #3a1f0b;
+    background: #fff0f8;
+  }
+
+  section.page.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+  }
+
+  /* Distinct backgrounds for each page for clarity */
+
+  #page1 {
+    background: linear-gradient(135deg, #f9d5e5, #fbc1cc);
+    color: #7a263a;
+  }
+
+  #page2 {
+    background: radial-gradient(circle at center, #ffe6f0, #f5a0c7);
+    color: #7a1f47;
+    text-shadow:
+      1px 1px 3px #7a1f47aa,
+      0 0 5px #eea1d3;
+  }
+
+  #page3 {
+    background: linear-gradient(135deg, #ffedea, #ffd5d1);
+    color: #b14a41;
+  }
+
+  #page4 {
+    background: linear-gradient(135deg, #fdecea, #ffd2d1);
+    color: #a84236;
+  }
+
+  #page5 {
+    background: linear-gradient(135deg, #ffe1ec, #f7b7c1);
+    color: #883344;
+  }
+
+  #page6 {
+    background: linear-gradient(135deg, #5b3f8d, #9275d5, #3d1c65);
+    color: #d7cfff;
+    text-shadow:
+      0 0 5px #99a9ff,
+      0 0 10px #b7b9ff;
+  }
+
+  /* Text styles */
+  h1, h2, h3 {
+    margin: 0.3em 0;
+    text-align: center;
+  }
+  h1 {
+    font-family: 'Parisienne', cursive;
+    font-size: 4rem;
+    text-shadow: 1px 1px 2px #a54a62;
+  }
+
+  #page6 h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #d3d7ff;
+    text-shadow:
+      0 0 15px #6c63ff,
+      0 0 25px #b1a7ff,
+      0 0 45px #8a7fff;
+    position: relative;
+    z-index: 10;
+  }
+
+  #page6 p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-weight: 700;
+    color: #d0d4ff;
+    text-shadow:
+      0 0 8px #5661e9,
+      0 0 18px #8a88f7;
+    position: relative;
+    z-index: 10;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  /* Specific improvements for page 2 content */
+  #page2 h2 {
+    font-size: 3.8rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+  }
+  #page2 p {
+    font-size: 1.5rem;
+    max-width: 450px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 0 auto 2rem;
+  }
+
+  /* Next button styles - uniform for all pages */
+  .next-button {
+    margin-top: 3rem;
+    padding: 12px 36px;
+    font-size: 1.3rem;
+    border-radius: 35px;
+    border: none;
+    background: #ef739f;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(239,115,159,0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    position: relative;
+    bottom: auto;
+    right: auto;
+    align-self: center;
+  }
+
+  /* Special positioning for page 1 and 2 buttons to avoid overlap */
+  #page1 .next-button {
+    position: absolute;
+    bottom: 50px;
+  }
+  #page2 .next-button {
+    position: absolute;
+    bottom: 110px;
+    right: 50%;
+  }
+  #page4 .next-button {
+    position: absolute;
+    bottom: 110;
+  }
+ 
+  
+
+  .next-button:disabled {
+    background: #dcb8c8;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .next-button:hover:not(:disabled) {
+    background-color: #cf427c;
+    transform: scale(1.1);
+  }
+
+  /* Cake page styles */
+  #cake-container {
+    position: relative;
+    width: 320px;
+    height: 200px;
+    margin-top: 2rem;
+    cursor: pointer;
+    user-select: none;
+    background: #ffe0bd;
+    border-radius: 0 0 80px 80px;
+    box-shadow:
+      inset 0 8px 15px #fae0b7,
+      0 4px 15px rgba(0,0,0,0.1);
+    z-index: 5;
+  }
+
+  #icing-layer {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 40px;
+    background: #fce0e6;
+    border-radius: 100px 100px 0 0;
+    box-shadow:
+      inset 0 5px 6px #f9bdc6,
+      0 2px 10px rgba(252,224,230,0.7);
+    z-index: 6;
+  }
+  #candles {
+    position: absolute;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    z-index: 7;
+  }
+
+  .candle {
+    width: 10px;
+    height: 45px;
+    background: #d33a3a;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    box-shadow: 0 0 5px 2px #fa5555;
+  }
+
+  .flame {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 22px;
+    background: radial-gradient(circle at center, #ffb347 0%, #ff6d3f 60%, transparent 90%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flame-flicker 1.2s infinite alternate ease-in-out;
+    filter: drop-shadow(0 0 6px #ffbb44);
+  }
+
+  @keyframes flame-flicker {
+    0% { transform: translateX(-50%) scale(1); }
+    100% { transform: translateX(-50%) scale(1.15, 0.9); }
+  }
+
+  /* Cake slices overlay for cut */
+  .cake-slice {
+    position: absolute;
+    bottom: 0;
+    height: 200px;
+    width: 64px; /* 5 slices */
+    background: #ffaa7d;
+    border-left: 3px solid #e8694c;
+    border-right: 3px solid #e8694c;
+    cursor: pointer;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+    box-shadow: inset 0 5px 10px #f38c65;
+    z-index: 10;
+  }
+  .cake-slice.cut {
+    background-color: #f0f0f0;
+    cursor: default;
+    transform: translateY(20px) rotate(5deg);
+    opacity: 0.5;
+    box-shadow: none;
+  }
+  .cake-slice:last-child {
+    border-right: none;
+  }
+
+  /* Hearts game with realistic heart shapes and heartbeat animation */
+
+  #hearts-container {
+    width: 260px;
+    height: 140px;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    position: relative;
+    gap: 15px;
+  }
+
+  .heart-realistic {
+    width: 60px;
+    height: 55px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transform-origin: center bottom;
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+  .heart-realistic.touched {
+    animation: none;
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+
+  .heart-realistic::before,
+  .heart-realistic::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    background: #e84e4e;
+    border-radius: 40px 40px 0 0;
+    top: 0;
+    left: 10px;
+    box-shadow: 0 0 7px #b23a3a;
+  }
+
+  .heart-realistic::after {
+    left: auto;
+    right: 10px;
+    transform: rotate(-45deg);
+    transform-origin: center bottom;
+  }
+
+  .heart-realistic::before {
+    transform: rotate(45deg);
+    transform-origin: center bottom;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  /* Page 5 prayers */
+  #page5 p {
+    font-size: 1.8rem;
+    max-width: 600px;
+    margin: 1rem auto;
+    font-style: italic;
+    color: #883344;
+    text-shadow: 1px 1px 2px #fce0d1;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Page 6 text */
+  #page6 h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #d3d7ff;
+    text-shadow:
+      0 0 15px #6c63ff,
+      0 0 25px #b1a7ff,
+      0 0 45px #8a7fff;
+    position: relative;
+    z-index: 10;
+  }
+
+  #page6 p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-weight: 700;
+    color: #d0d4ff;
+    text-shadow:
+      0 0 8px #5661e9,
+      0 0 18px #8a88f7;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Floating hearts decoration */
+  .floating-heart {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background-color: #ef739f;
+    clip-path: polygon(
+      50% 0%,
+      61% 9%,
+      68% 17%,
+      75% 27%,
+      82% 42%,
+      85% 54%,
+      85% 68%,
+      80% 76%,
+      72% 83%,
+      55% 100%,
+      35% 83%,
+      26% 76%,
+      20% 68%,
+      20% 54%,
+      22% 42%,
+      29% 27%,
+      35% 17%,
+      42% 9%
+    );
+    filter: drop-shadow(0 0 5px #d44);
+    animation: floatUpDown ease-in-out infinite alternate;
+  }
+
+  @keyframes floatUpDown {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-12px) scale(1.1); }
+  }
+
+  #footer-hearts {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    opacity: 0.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 3.5rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+    }
+    #cake-container {
+      width: 280px;
+      height: 180px;
+    }
+    #icing-layer {
+      width: 280px;
+      height: 40px;
+      bottom: 140px;
+    }
+    #candles {
+      width: 280px;
+      height: 50px;
+      bottom: 170px;
+    }
+    .candle {
+      width: 8px;
+      height: 30px;
+    }
+    #hearts-container {
+      width: 200px;
+      height: 120px;
+      gap: 12px;
+    }
+    .heart-realistic {
+      width: 45px;
+      height: 40px;
+    }
+  }
+
+  /* Fireworks canvas style */
+  #fireworksCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 3;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Fireworks canvas for pages 2, 3 & 6 -->
+    <canvas id="fireworksCanvas" aria-hidden="true"></canvas>
+
+    <!-- Page 1: Welcome -->
+    <section class="page active" id="page1" tabindex="0" aria-label="Welcome page">
+      <h1>Welcome To My Love,<br> Ansa 💖</h1>
+      <button class="next-button" id="toPage2" aria-label="Proceed to birthday wish">Next</button>
+    </section>
+
+    <!-- Page 2: Birthday Wish -->
+    <section class="page" id="page2" tabindex="0" aria-label="Birthday wish page">
+      <h2>Happy Birthday, My Sweet Ansa! 🎉🎂</h2>
+      <p>
+        I wish you all the happiness,<br> love, and dreams come true today.<br>
+        You are my everything.
+      </p>
+      <button class="next-button" id="toPage3" aria-label="Proceed to cake game">Next</button>
+    </section>
+
+    <!-- Page 3: Cut the Cake Game -->
+    <section class="page" id="page3" tabindex="0" aria-label="Cut the cake game page">
+      <h2>Click to Cut the Cake 🎂✂️</h2>
+      <p style="max-width: 320px; text-align:center; font-size:1.2rem; margin-bottom:1rem;">
+        Click each slice of cake to cut it.<br> Cut all to move forward!
+      </p>
+      <div id="cake-container" aria-label="Click cake slices to cut" role="region" tabindex="0">
+        <div id="icing-layer"></div>
+        <div id="candles">
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+        </div>
+        <!-- Cake slices -->
+        <div class="cake-slice" data-index="0" style="left:0;"></div>
+        <div class="cake-slice" data-index="1" style="left:64px;"></div>
+        <div class="cake-slice" data-index="2" style="left:128px;"></div>
+        <div class="cake-slice" data-index="3" style="left:192px;"></div>
+        <div class="cake-slice" data-index="4" style="left:256px; border-right:none;"></div>
+      </div>
+      <button class="next-button" id="toPage4" aria-label="Proceed to heart game" disabled>Next</button>
+    </section>
+
+    <!-- Page 4: Touch 4 Hearts Game -->
+    <section class="page" id="page4" tabindex="0" aria-label="Touch hearts game page">
+      <h2>Touch All 4 Hearts to Continue ❤️❤️❤️❤️</h2>
+      <p style="font-weight:600; text-align:center; max-width: 300px; margin-bottom: 1rem;">
+        Tap on each heart to pop it!
+      </p>
+      <div id="hearts-container" role="region" aria-live="polite" aria-label="Hearts to pop">
+        <div class="heart-realistic" tabindex="0" role="button" aria-label="Heart 1"></div>
+        <div class="heart-realistic" tabindex="0" role="button" aria-label="Heart 2"></div>
+        <div class="heart-realistic" tabindex="0" role="button" aria-label="Heart 3"></div>
+        <div class="heart-realistic" tabindex="0" role="button" aria-label="Heart 4"></div>
+      </div>
+      <button class="next-button" id="toPage5" aria-label="Proceed to prayer page" disabled>Next</button>
+    </section>
+
+    <!-- Page 5: Prayer Page -->
+    <section class="page" id="page5" tabindex="0" aria-label="Prayer page">
+      <h2>My Prayer for Us</h2>
+      <p>
+        May you live forever with me,<br />
+        Sharing all the joys and dreams.<br />
+        Together through every sunrise and sunset,<br />
+        Forever and ever. 💞
+      </p>
+      <button class="next-button" id="toPage6" aria-label="Proceed to thanks page">Next</button>
+    </section>
+
+    <!-- Page 6: Thank You -->
+    <section class="page" id="page6" tabindex="0" aria-label="Thank you page">
+      <h2>Thank You, Ansa!</h2>
+      <p>
+        Thank you for being my sunshine and my heart.<br />
+        Every moment with you is a priceless gift.<br/>
+        I love you more than words can say. 💖
+      </p>
+    </section>
+
+    <!-- Floating hearts decoration -->
+    <div id="footer-hearts" aria-hidden="true">
+      <div class="floating-heart" style="animation-delay:0s;"></div>
+      <div class="floating-heart" style="animation-delay:1s;"></div>
+      <div class="floating-heart" style="animation-delay:2s;"></div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const pages = [...document.querySelectorAll('.page')];
+  let currentPageIndex = 0;
+
+  // Fireworks canvas & context
+  const canvas = document.getElementById('fireworksCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let cw, ch;
+  function resizeCanvas() {
+    cw = window.innerWidth;
+    ch = window.innerHeight;
+    canvas.width = cw * window.devicePixelRatio;
+    canvas.height = ch * window.devicePixelRatio;
+    canvas.style.width = cw + 'px';
+    canvas.style.height = ch + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Fireworks params
+  const fireworks = [];
+  const particles = [];
+
+  const maxFireworks = 5;
+  let animationFrameId;
+
+  // Utility
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  // Firework class
+  class Firework {
+    constructor(sx, sy, tx, ty) {
+      this.x = sx;
+      this.y = sy;
+      this.sx = sx;
+      this.sy = sy;
+      this.tx = tx;
+      this.ty = ty;
+      this.distanceToTarget = dist(sx, sy, tx, ty);
+      this.distanceTraveled = 0;
+      this.coordinates = [];
+      this.coordinateCount = 3;
+      while(this.coordinateCount--) {
+        this.coordinates.push([this.x, this.y]);
+      }
+      this.angle = Math.atan2(ty - sy, tx - sx);
+      this.speed = 4;
+      this.acceleration = 1.05;
+      this.brightness = random(50, 70);
+      this.targetRadius = 8;
+    }
+    update(index) {
+      this.coordinates.pop();
+      this.coordinates.unshift([this.x, this.y]);
+
+      this.speed *= this.acceleration;
+      let vx = Math.cos(this.angle) * this.speed;
+      let vy = Math.sin(this.angle) * this.speed;
+      this.distanceTraveled = dist(this.sx, this.sy, this.x + vx, this.y + vy);
+
+      if (this.distanceTraveled >= this.distanceToTarget) {
+        createParticles(this.tx, this.ty);
+        fireworks.splice(index,1);
+      } else {
+        this.x += vx;
+        this.y += vy;
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.moveTo(this.coordinates[this.coordinates.length-1][0], this.coordinates[this.coordinates.length-1][1]);
+      ctx.lineTo(this.x, this.y);
+      ctx.strokeStyle = 'hsl(' + random(0,360) + ', 100%, ' + this.brightness + '%)';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(this.tx, this.ty, this.targetRadius, 0, Math.PI*2);
+      ctx.stroke();
+    }
+  }
+
+  // Particle class
+  class Particle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.coordinates = [];
+      this.coordinateCount = 5;
+      while(this.coordinateCount--) {
+        this.coordinates.push([this.x, this.y]);
+      }
+      this.angle = random(0, Math.PI*2);
+      this.speed = random(1, 10);
+      this.friction = 0.95;
+      this.gravity = 0.7;
+      this.hue = random(0, 360);
+      this.brightness = random(50, 80);
+      this.alpha = 1;
+      this.decay = random(0.015, 0.03);
+    }
+    update(index) {
+      this.coordinates.pop();
+      this.coordinates.unshift([this.x, this.y]);
+
+      this.speed *= this.friction;
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed + this.gravity;
+      this.alpha -= this.decay;
+
+      if (this.alpha <= 0) {
+        particles.splice(index,1);
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.moveTo(this.coordinates[this.coordinates.length-1][0], this.coordinates[this.coordinates.length-1][1]);
+      ctx.lineTo(this.x, this.y);
+      ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, ' + this.brightness + '%, '+ this.alpha + ')';
+      ctx.stroke();
+    }
+  }
+
+  function dist(aX,aY,bX,bY) {
+    const x = bX - aX;
+    const y = bY - aY;
+    return Math.sqrt(x*x + y*y);
+  }
+
+  function createParticles(x,y) {
+    let particleCount = 30;
+    while(particleCount--) {
+      particles.push(new Particle(x,y));
+    }
+  }
+
+  function loop() {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,0.15)';
+    ctx.fillRect(0,0,cw,ch);
+    ctx.globalCompositeOperation = 'lighter';
+
+    let i = fireworks.length;
+    while(i--) {
+      fireworks[i].draw();
+      fireworks[i].update(i);
+    }
+
+    i = particles.length;
+    while(i--) {
+      particles[i].draw();
+      particles[i].update(i);
+    }
+
+    if (fireworks.length < maxFireworks) {
+      const startX = cw / 2;
+      const startY = ch;
+      const tx = random(100, cw - 100);
+      const ty = random(50, ch / 2);
+      fireworks.push(new Firework(startX, startY, tx, ty));
+    }
+
+    animationFrameId = requestAnimationFrame(loop);
+  }
+
+  // Start fireworks when on pages 2, 3 or 6, stop otherwise
+  function updateFireworksVisibility() {
+    if (currentPageIndex === 1 || currentPageIndex === 2 || currentPageIndex === 5) {
+      canvas.style.zIndex = '3';
+      loop();
+    } else {
+      canvas.style.zIndex = '-1';
+      cancelAnimationFrame(animationFrameId);
+      ctx.clearRect(0,0,cw,ch);
+      fireworks.length = 0;
+      particles.length = 0;
+    }
+  }
+
+  function showPage(index) {
+    pages.forEach((page, i) => {
+      if (i === index) {
+        page.classList.add('active');
+        page.focus();
+      } else {
+        page.classList.remove('active');
+      }
+    });
+    currentPageIndex = index;
+    updateFireworksVisibility();
+  }
+
+  // Navigation helpers
+  function enableButton(btn) {
+    btn.disabled = false;
+  }
+  function disableButton(btn) {
+    btn.disabled = true;
+  }
+
+  // Page 1 to 2
+  const toPage2Btn = document.getElementById('toPage2');
+  toPage2Btn.addEventListener('click', () => {
+    showPage(1);
+  });
+  toPage2Btn.addEventListener('mouseenter', () => {
+    showPage(1);
+  });
+
+  // Page 2 to 3
+  const toPage3Btn = document.getElementById('toPage3');
+  toPage3Btn.addEventListener('click', () => {
+    showPage(2);
+  });
+  toPage3Btn.addEventListener('mouseenter', () => {
+    showPage(2);
+  });
+
+  // Page 3: Simplified Cut Cake game logic
+  const cakeContainer = document.getElementById('cake-container');
+  const toPage4Btn = document.getElementById('toPage4');
+  const slices = Array.from(document.querySelectorAll('.cake-slice'));
+  let cutCount = 0;
+
+  slices.forEach(slice => {
+    slice.addEventListener('click', () => {
+      if (slice.classList.contains('cut')) return;
+      slice.classList.add('cut');
+      cutCount++;
+      if (cutCount === slices.length) {
+        enableButton(toPage4Btn);
+        toPage4Btn.focus();
+      }
+    });
+    // Keyboard accessibility on enter or space
+    slice.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        slice.click();
+      }
+    });
+  });
+
+  toPage4Btn.addEventListener('click', () => {
+    if (!toPage4Btn.disabled) showPage(3);
+  });
+  toPage4Btn.addEventListener('mouseenter', () => {
+    if (!toPage4Btn.disabled) showPage(3);
+  });
+
+  // Page 4: Simplified hearts pop game with real hearts & beat animation
+  const heartsContainer = document.getElementById('hearts-container');
+  const toPage5Btn = document.getElementById('toPage5');
+  const hearts = Array.from(heartsContainer.querySelectorAll('.heart-realistic'));
+  let poppedCount = 0;
+
+  function popHeart(heart) {
+    if (heart.classList.contains('touched')) return;
+    heart.classList.add('touched');
+    poppedCount++;
+    if (poppedCount === hearts.length) {
+      enableButton(toPage5Btn);
+      toPage5Btn.focus();
+    }
+  }
+
+  hearts.forEach(heart => {
+    heart.addEventListener('click', () => popHeart(heart));
+    heart.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        popHeart(heart);
+      }
+    });
+  });
+
+  toPage5Btn.addEventListener('click', () => {
+    if (!toPage5Btn.disabled) showPage(4);
+  });
+  toPage5Btn.addEventListener('mouseenter', () => {
+    if (!toPage5Btn.disabled) showPage(4);
+  });
+
+  // Page 5 to 6
+  const toPage6Btn = document.getElementById('toPage6');
+  toPage6Btn.addEventListener('click', () => {
+    showPage(5);
+  });
+  toPage6Btn.addEventListener('mouseenter', () => {
+    showPage(5);
+  });
+
+  // Initialize fireworks state for first page
+  updateFireworksVisibility();
+
+})();
+</script>
+</body>
+</html>
